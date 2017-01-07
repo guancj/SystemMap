@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
     
-    NSLog(@"我要更新1")；
+    NSLog(@"我要更新1");
     
     
 //    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
