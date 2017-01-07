@@ -22,6 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    NSLog(@"我要更新1")；
+    
+    
 //    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
 //    
 //    NSObject* workspace = [LSApplicationWorkspace_class performSelector:@selector(defaultWorkspace)];
