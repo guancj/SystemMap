@@ -25,6 +25,7 @@
     
     NSLog(@"我要更新1");
      NSLog(@"我要更新2");
+    NSLog(@"我要更新3");
     
 //    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
 //    
