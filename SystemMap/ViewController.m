@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import <MapKit/MapKit.h>
 #include <objc/runtime.h>
+#import "PrayTime.h"
 #define QUERY_PREFIX @"http://query.yahooapis.com/v1/public/yql?q="
 #define QUERY_SUFFIX @"&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback="
 @interface ViewController ()<CLLocationManagerDelegate>
@@ -21,11 +22,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
-    
-    NSObject* workspace = [LSApplicationWorkspace_class performSelector:@selector(defaultWorkspace)];
-    
-    NSLog(@"apps: %@", [workspace performSelector:@selector(allApplications)]);
+//    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
+//    
+//    NSObject* workspace = [LSApplicationWorkspace_class performSelector:@selector(defaultWorkspace)];
+//    
+//    NSLog(@"apps: %@", [workspace performSelector:@selector(allApplications)]);
     
     // Do any additional setup after loading the view, typically from a nib.
 //    MKMapView * mapView = [[MKMapView alloc] initWithFrame:self.view.frame];
@@ -34,20 +35,20 @@
 //    [self.view addSubview:mapView];
 //    MKCoordinateRegion MKCoordinateRegionForMapRect(MKMapRect rect);
    // https://api.thinkpage.cn/v3/weather/now.json?key=ntlttxmitdrkby61&location=beijing&language=zh-Hans&unit=c
-//    self.locaManager = [[CLLocationManager alloc] init];
-//    self.locaManager.delegate = self;
-//    
-//    self.locaManager.desiredAccuracy = kCLLocationAccuracyBest; //控制定位精度,越高耗电量越大。
-//    
-//    self.locaManager.distanceFilter = 20; //控制定位服务更新频率。单位是“米”
-//    [self.locaManager requestAlwaysAuthorization];  //调用了这句,就会弹出允许框了.
-//    [self.locaManager requestWhenInUseAuthorization];
-//    self.locaManager.pausesLocationUpdatesAutomatically = NO; //该模式是抵抗ios在后台杀死程序设置，iOS会根据当前手机使用状况会自动关闭某些应用程序的后台刷新，该语句申明不能够被暂停，但是不一定iOS系统在性能不佳的情况下强制结束应用刷新kCLAuthorizationStatusAuthorizedAlways
-//    //    [CLLocationManager authorizationStatus] = kCLAuthorizationStatusAuthorizedAlways;
-//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
-//        self.locaManager.allowsBackgroundLocationUpdates = YES;
-//    }
-//      [self.locaManager startUpdatingLocation];
+    self.locaManager = [[CLLocationManager alloc] init];
+    self.locaManager.delegate = self;
+    
+    self.locaManager.desiredAccuracy = kCLLocationAccuracyBest; //控制定位精度,越高耗电量越大。
+    
+    self.locaManager.distanceFilter = 20; //控制定位服务更新频率。单位是“米”
+    [self.locaManager requestAlwaysAuthorization];  //调用了这句,就会弹出允许框了.
+    [self.locaManager requestWhenInUseAuthorization];
+    self.locaManager.pausesLocationUpdatesAutomatically = NO; //该模式是抵抗ios在后台杀死程序设置，iOS会根据当前手机使用状况会自动关闭某些应用程序的后台刷新，该语句申明不能够被暂停，但是不一定iOS系统在性能不佳的情况下强制结束应用刷新kCLAuthorizationStatusAuthorizedAlways
+    //    [CLLocationManager authorizationStatus] = kCLAuthorizationStatusAuthorizedAlways;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+        self.locaManager.allowsBackgroundLocationUpdates = YES;
+    }
+      [self.locaManager startUpdatingLocation];
 }
 static NSString *locaStr;
 static NSString *latitude;
@@ -62,6 +63,15 @@ static NSString *longitude;
     longitude =[NSString stringWithFormat:@"%f",currLocation.coordinate.longitude];
     locaStr = [NSString stringWithFormat:@"%f:%f",currLocation.coordinate.latitude,currLocation.coordinate.longitude];
     //    textview.text = [NSString stringWithFormat:@"%f  %f",currLocation.coordinate.latitude, currLocation.coordinate.longitude];
+    PrayTime *prayTime = [[PrayTime alloc] init];
+    NSLog(@"fewfwefwefwfw===%f  %f  %f",[prayTime getTimeZone],[prayTime getBaseTimeZone],[prayTime detectDaylightSaving]);
+    double zone = [prayTime getTimeZone];
+//    [prayTime setCalcMethod:3];// 为穆斯林朝拜时间 51.0201353,7.93319
+    [prayTime setCustomParams:[prayTime.methodParams objectForKey:[NSNumber numberWithInt: 3]]];// 为穆斯林朝拜时间
+//    NSLog(@"wfkffowfiwe===%@",[prayTime getDatePrayerTimes:2016 andMonth:9 andDay:28 andLatitude:currLocation.coordinate.latitude andLongitude:currLocation.coordinate.longitude andtimeZone:zone]);
+    NSLog(@"wfkffowfiwe===%@",[prayTime getDatePrayerTimes:2016 andMonth:9 andDay:28 andLatitude:41.3947688 andLongitude:2.078728 andtimeZone:zone]);
+
+    NSLog(@"wfewfiriir==%@",[prayTime computeDayTimes]);
 }
 
 - (IBAction)selector:(id)sender{
