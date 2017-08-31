@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
+#import "NEWViewController.h"
 
 @interface AppDelegate ()
 @property (nonatomic, strong) CLLocationManager *locaManager;
@@ -31,6 +33,12 @@
 //        [self.locaManager requestAlwaysAuthorization];  //调用了这句,就会弹出允许框了.
 //    }
 //    [self.locaManager startUpdatingLocation];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // Override point for customization after application launch.
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    self.window.rootViewController = [[ViewController alloc] init];
+
     return YES;
 }
 

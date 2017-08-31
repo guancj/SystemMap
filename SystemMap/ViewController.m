@@ -8,158 +8,226 @@
 
 #import "ViewController.h"
 #import "AFNetworking.h"
+#import "AFURLRequestSerialization.h"
 #import <MapKit/MapKit.h>
 #include <objc/runtime.h>
 #import "PrayTime.h"
+#import "textKVO.h"
 #define QUERY_PREFIX @"http://query.yahooapis.com/v1/public/yql?q="
 #define QUERY_SUFFIX @"&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback="
 @interface ViewController ()<CLLocationManagerDelegate>
+{
+    NSMutableArray *arr;
+    AFHTTPSessionManager *requestSerializer;
+    textKVO *kvo;
+    int i ;
+}
 @property (nonatomic, strong) CLLocationManager *locaManager;
 @end
 
 @implementation ViewController
 
+
+- (void)lououtSelect{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"App-Prefs:root=Bluetooth"]];
+}
+
+- (void)addTask:(AFHTTPSessionManager *)amnager{
+    i ++;
+    NSLog(@"requestTime %@====================== %@",amnager,[[NSDate date] description]);
+    NSDictionary *dic = @{@"AppId":@"71",@"GroupId":@"",@"Language":@"zh",@"LastTime":[[NSDate date] description],@"MapType":@"",@"TimeOffset":@"8",@"Token":@"4BE87C6AB096084BCB50758A75639DC2365898138B9FC8FE62E99E86447BDA77831F2A416AD91385",@"UserId":@"818058"};
+    [requestSerializer POST:@"http://openapi.5gcity.com/api/Device/PersonDeviceList" parameters:dic success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"requestFinishTime ***************** %@",[[NSDate date] description]);
+        if (i >= 30) {
+            for (NSURLSessionDataTask *task0 in requestSerializer.tasks) {
+                if (task0 != task) {
+                    [task0 cancel];
+                }
+            }
+        }
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [task cancel];
+    }];
+    
+}
+
+- (void)change{
+//    kvo.textKvo = @"1231333";
+    [kvo change];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    NSLog(@"key == %@  change  %@",keyPath,change);
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    arr = [NSMutableArray array];
+    
+    requestSerializer = [AFHTTPSessionManager manager];
+    requestSerializer.requestSerializer = [AFJSONRequestSerializer serializer];
+    requestSerializer.responseSerializer.acceptableContentTypes  = [NSSet setWithObjects: @"application/json",@"text/json", nil];
+    [requestSerializer.requestSerializer setValue:@"3A73DE89-2C32-4DD8-A8F8-B43C1FC26C17" forHTTPHeaderField:@"key"];
+    [requestSerializer.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"content-type"];
+    
+    kvo = [[textKVO alloc] init];
+    kvo.textKvo = @"1231";
+    [kvo addObserver:self forKeyPath:@"textKvo" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    UIButton *but = [UIButton buttonWithType:UIButtonTypeCustom];
+    but.frame = CGRectMake(20, 30, 50, 60);
+    but.backgroundColor = [UIColor greenColor];
+    [but addTarget:self action:@selector(change) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:but];
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(addTask:) userInfo:nil repeats:YES];
+    
+    //   UIButton *laoutLab = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    laoutLab.frame = CGRectMake(20,  80, 320 - 40, 44);
+    //    laoutLab.layer.cornerRadius = 22;
+    //    laoutLab.titleLabel.textAlignment = NSTextAlignmentCenter;
+    //    [laoutLab setTitle:@"me_signOut" forState:UIControlStateNormal];
+    //    [laoutLab setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    ////    laoutLab.backgroundColor = [SmaColor colorWithHexString:@"#7EBFF9" alpha:1];
+    //    laoutLab.layer.masksToBounds = YES;
+    //    [laoutLab addTarget:self action:@selector(lououtSelect) forControlEvents:UIControlEventTouchUpInside];
+    //    [self.view addSubview:laoutLab];
+    //
+    ////    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
+    ////
+    ////    NSObject* workspace = [LSApplicationWorkspace_class performSelector:@selector(defaultWorkspace)];
+    ////
+    ////    NSLog(@"apps: %@", [workspace performSelector:@selector(allApplications)]);
+    //
+    //    // Do any additional setup after loading the view, typically from a nib.
+    //    MKMapView * mapView = [[MKMapView alloc] initWithFrame:self.view.frame];
+    //    mapView.region=MKCoordinateRegionMake(CLLocationCoordinate2DMake(39.26, 116.3), MKCoordinateSpanMake(1, 1));
+    //    mapView.userTrackingMode = YES;
+    ////    [self.view addSubview:mapView];
+    //    MKCoordinateRegion MKCoordinateRegionForMapRect(MKMapRect rect);
+    // https://api.thinkpage.cn/v3/weather/now.json?key=ntlttxmitdrkby61&location=beijing&language=zh-Hans&unit=c
+    //    self.locaManager = [[CLLocationManager alloc] init];
+    //    self.locaManager.delegate = self;
+    //
+    //    self.locaManager.desiredAccuracy = kCLLocationAccuracyBest; //控制定位精度,越高耗电量越大。
+    //
+    //    self.locaManager.distanceFilter = 20; //控制定位服务更新频率。单位是“米”
+    //    [self.locaManager requestAlwaysAuthorization];  //调用了这句,就会弹出允许框了.
+    //    [self.locaManager requestWhenInUseAuthorization];
+    //    self.locaManager.pausesLocationUpdatesAutomatically = NO; //该模式是抵抗ios在后台杀死程序设置，iOS会根据当前手机使用状况会自动关闭某些应用程序的后台刷新，该语句申明不能够被暂停，但是不一定iOS系统在性能不佳的情况下强制结束应用刷新kCLAuthorizationStatusAuthorizedAlways
+    //    //    [CLLocationManager authorizationStatus] = kCLAuthorizationStatusAuthorizedAlways;
+    //    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+    //        self.locaManager.allowsBackgroundLocationUpdates = YES;
+    //    }
+    //      [self.locaManager startUpdatingLocation];
     
     
-    NSLog(@"我要更新1");
-     NSLog(@"我要更新2");
-    NSLog(@"我要更新3");
-    NSLog(@"我要更新4");
-    NSLog(@"我要更新5");
-    NSLog(@"我要更新5");
-    NSLog(@"我要更新5");
-    NSLog(@"我要更新5");
-//    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
-//    
-//    NSObject* workspace = [LSApplicationWorkspace_class performSelector:@selector(defaultWorkspace)];
-//    
-//    NSLog(@"apps: %@", [workspace performSelector:@selector(allApplications)]);
-    
-    // Do any additional setup after loading the view, typically from a nib.
-//    MKMapView * mapView = [[MKMapView alloc] initWithFrame:self.view.frame];
-//    mapView.region=MKCoordinateRegionMake(CLLocationCoordinate2DMake(39.26, 116.3), MKCoordinateSpanMake(1, 1));
-//    mapView.userTrackingMode = YES;
-//    [self.view addSubview:mapView];
-//    MKCoordinateRegion MKCoordinateRegionForMapRect(MKMapRect rect);
-   // https://api.thinkpage.cn/v3/weather/now.json?key=ntlttxmitdrkby61&location=beijing&language=zh-Hans&unit=c
-    self.locaManager = [[CLLocationManager alloc] init];
-    self.locaManager.delegate = self;
-    
-    self.locaManager.desiredAccuracy = kCLLocationAccuracyBest; //控制定位精度,越高耗电量越大。
-    
-    self.locaManager.distanceFilter = 20; //控制定位服务更新频率。单位是“米”
-    [self.locaManager requestAlwaysAuthorization];  //调用了这句,就会弹出允许框了.
-    [self.locaManager requestWhenInUseAuthorization];
-    self.locaManager.pausesLocationUpdatesAutomatically = NO; //该模式是抵抗ios在后台杀死程序设置，iOS会根据当前手机使用状况会自动关闭某些应用程序的后台刷新，该语句申明不能够被暂停，但是不一定iOS系统在性能不佳的情况下强制结束应用刷新kCLAuthorizationStatusAuthorizedAlways
-    //    [CLLocationManager authorizationStatus] = kCLAuthorizationStatusAuthorizedAlways;
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
-        self.locaManager.allowsBackgroundLocationUpdates = YES;
-    }
-      [self.locaManager startUpdatingLocation];
 }
 static NSString *locaStr;
 static NSString *latitude;
 static NSString *longitude;
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations{
     CLLocation * currLocation = [locations lastObject];
-//    [self coordinates:currLocation];
+    //    [self coordinates:currLocation];
     NSLog(@"---%@",[NSString stringWithFormat:@"%f",currLocation.coordinate.latitude]);
     
     NSLog(@"+++%@",[NSString stringWithFormat:@"%f",currLocation.coordinate.longitude]);
-     latitude =[NSString stringWithFormat:@"%f",currLocation.coordinate.latitude];
+    latitude =[NSString stringWithFormat:@"%f",currLocation.coordinate.latitude];
     longitude =[NSString stringWithFormat:@"%f",currLocation.coordinate.longitude];
     locaStr = [NSString stringWithFormat:@"%f:%f",currLocation.coordinate.latitude,currLocation.coordinate.longitude];
     //    textview.text = [NSString stringWithFormat:@"%f  %f",currLocation.coordinate.latitude, currLocation.coordinate.longitude];
     PrayTime *prayTime = [[PrayTime alloc] init];
     NSLog(@"fewfwefwefwfw===%f  %f  %f",[prayTime getTimeZone],[prayTime getBaseTimeZone],[prayTime detectDaylightSaving]);
     double zone = [prayTime getTimeZone];
-//    [prayTime setCalcMethod:3];// 为穆斯林朝拜时间 51.0201353,7.93319
+    //    [prayTime setCalcMethod:3];// 为穆斯林朝拜时间 51.0201353,7.93319
     [prayTime setCustomParams:[prayTime.methodParams objectForKey:[NSNumber numberWithInt: 3]]];// 为穆斯林朝拜时间
-//    NSLog(@"wfkffowfiwe===%@",[prayTime getDatePrayerTimes:2016 andMonth:9 andDay:28 andLatitude:currLocation.coordinate.latitude andLongitude:currLocation.coordinate.longitude andtimeZone:zone]);
+    //    NSLog(@"wfkffowfiwe===%@",[prayTime getDatePrayerTimes:2016 andMonth:9 andDay:28 andLatitude:currLocation.coordinate.latitude andLongitude:currLocation.coordinate.longitude andtimeZone:zone]);
     NSLog(@"wfkffowfiwe===%@",[prayTime getDatePrayerTimes:2016 andMonth:9 andDay:28 andLatitude:41.3947688 andLongitude:2.078728 andtimeZone:zone]);
-
+    
     NSLog(@"wfewfiriir==%@",[prayTime computeDayTimes]);
+    
 }
 
 - (IBAction)selector:(id)sender{
-//    NSDictionary *parameters = @{@"device_num":@"1",@"device_list":@[@{@"id":@"gh_16e81fe35a4c_4d7a95d27d361cc0",@"mac":@"123456789ABC",@"connect_protocol":@"3",@"auth_key":@"1234567890ABCDEF1234567890ABCDEF",@"close_strategy":@"1",@"conn_strategy":@"1",@"crypt_method":@"1",@"auth_ver":@"1",@"manu_mac_pos":@"-1",@"ser_mac_pos":@"-2",@"ble_simple_protocol":@"1"}],@"op_type":@"1"};
-//
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    [manager GET:@"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxf71013eb5678c378&secret=04d04762ffde3117b823f9aa53b6ee72" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        NSString *tocken = [responseObject objectForKey:@"access_token"];
-//        NSLog(@" %@ responseObject=%@",tocken,responseObject);
-//        
-//        [manager POST:[NSString stringWithFormat:@"https://api.weixin.qq.com/device/getqrcode?access_token=%@&product_id=5275",tocken] parameters:parameters
-//         
-//              success:^(AFHTTPRequestOperation *operation,id responseObject) {
-//                  NSString *succe = [[responseObject objectForKey:@"base_resp"] objectForKey:@"errmsg"];
-//                  NSLog(@"Success: %@   %@", responseObject,succe);
-//                  
-//              }failure:^(AFHTTPRequestOperation *operation,NSError *error) {
-//                  //
-//                  NSLog(@"Error: %@", error);
-//                  //
-//              }];
-//
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"error = %@",error);
-//    }];
+    
+    //    NSDictionary *parameters = @{@"device_num":@"1",@"device_list":@[@{@"id":@"gh_16e81fe35a4c_4d7a95d27d361cc0",@"mac":@"123456789ABC",@"connect_protocol":@"3",@"auth_key":@"1234567890ABCDEF1234567890ABCDEF",@"close_strategy":@"1",@"conn_strategy":@"1",@"crypt_method":@"1",@"auth_ver":@"1",@"manu_mac_pos":@"-1",@"ser_mac_pos":@"-2",@"ble_simple_protocol":@"1"}],@"op_type":@"1"};
+    //
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//        [manager GET:@"https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxf71013eb5678c378&secret=04d04762ffde3117b823f9aa53b6ee72" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            NSString *tocken = [responseObject objectForKey:@"access_token"];
+//            NSLog(@" %@ responseObject=%@",tocken,responseObject);
+//    
+//            [manager POST:[NSString stringWithFormat:@"https://api.weixin.qq.com/device/getqrcode?access_token=%@&product_id=5275",tocken] parameters:parameters
+//    
+//                  success:^(AFHTTPRequestOperation *operation,id responseObject) {
+//                      NSString *succe = [[responseObject objectForKey:@"base_resp"] objectForKey:@"errmsg"];
+//                      NSLog(@"Success: %@   %@", responseObject,succe);
+//    
+//                  }failure:^(AFHTTPRequestOperation *operation,NSError *error) {
+//                      //
+//                      NSLog(@"Error: %@", error);
+//                      //
+//                  }];
+//    
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            NSLog(@"error = %@",error);
+//        }];
     
     /******************************************天气***************************************************/
-//@"id":@"dev1",@"mac":@"123456789ABC",@"connect_protocol":@"3" ,
-//    NSDictionary *d = @{@"device_list":@[@{@"id":@"dev1"},@{@"mac":@"123456789ABC"},@{@"connect_protocol":@"3"},@{@"auth_key":@""},@{@"close_strategy":@"1"},@{@"conn_strategy":@"1"},@{@"crypt_method":@"0"},@{@"auth_ver":@"1"},@{@"auth_ver":@"-1"},@{@"ser_mac_pos":@"-2"},@{@"ble_simple_protocol":@"0"}]};
-//       NSLog(@"efwef==%@",parameters);
-//   NSDictionary *parameters = [NSDictionary dictionary];
-
-   //    api.openweathermap.org/data/2.5/weather?lat=35&lon=139 25.5838016,113.7212301
-//    locaStr = @"47.6870112:115.4076315";
-//    [manager GET:[NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=25.5838016&lon=113.7212301&APPID=2dd31498a79e5f34c57b82565aa7d561"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//          NSLog(@"Success: %@", responseObject);
-//        [self parsingWatcherData:responseObject];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Error: %@", error);
-//    }];
+    //@"id":@"dev1",@"mac":@"123456789ABC",@"connect_protocol":@"3" ,
+    //    NSDictionary *d = @{@"device_list":@[@{@"id":@"dev1"},@{@"mac":@"123456789ABC"},@{@"connect_protocol":@"3"},@{@"auth_key":@""},@{@"close_strategy":@"1"},@{@"conn_strategy":@"1"},@{@"crypt_method":@"0"},@{@"auth_ver":@"1"},@{@"auth_ver":@"-1"},@{@"ser_mac_pos":@"-2"},@{@"ble_simple_protocol":@"0"}]};
+    //       NSLog(@"efwef==%@",parameters);
+    //   NSDictionary *parameters = [NSDictionary dictionary];
     
-//     NSDictionary *results = [self query:@"SELECT * FROM weather.forecast WHERE woeid=2502265"];
-//    NSLog(@"+++++%@",[[results valueForKeyPath:@"query.results"] description]);
-  
+    //    api.openweathermap.org/data/2.5/weather?lat=35&lon=139 25.5838016,113.7212301
+    //    locaStr = @"47.6870112:115.4076315"; 113.861586%2C22.576485
+    //    [manager GET:[NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=25.5838016&lon=113.7212301&APPID=2dd31498a79e5f34c57b82565aa7d561"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    //          NSLog(@"Success: %@", responseObject);
+    //        [self parsingWatcherData:responseObject];
+    //    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    //        NSLog(@"Error: %@", error);
+    //    }];
+    
+    //     NSDictionary *results = [self query:@"SELECT * FROM weather.forecast WHERE woeid=2502265"];
+    //    NSLog(@"+++++%@",[[results valueForKeyPath:@"query.results"] description]);
+    
     
     /*************************************食物API******************************************************/
     //https://developer.nutritionix.com/docs/v1_1  dfc68413  8830b6bae9185990e08534a06b0c4194
-   // NSLog(@"Nutritionix API call:  %@", [apiIUrl stringByAppendingFormat:@"item?upc=%@&appId=%@&appKey=%@", upc, appId, appKey]);
+    // NSLog(@"Nutritionix API call:  %@", [apiIUrl stringByAppendingFormat:@"item?upc=%@&appId=%@&appKey=%@", upc, appId, appKey]);
     
     NSDictionary *parameters1 = @{@"appId":@"dfc68413",@"appKey":@"8830b6bae9185990e08534a06b0c4194",@"query":@"Starbucks OR Frappuccino*"};
     NSString *apiIUrl = @"https://developer.nutritionix.com/docs/v1_1";
     NSString *scanUrl = [apiIUrl stringByAppendingFormat:@"item?upc=%@&appId=%@&appKey=%@", @"StarbucksORFrappuccino*", @"dfc68413", @"8830b6bae9185990e08534a06b0c4194"];
-//    id response;
-   AFHTTPRequestOperationManager *manager1 = [AFHTTPRequestOperationManager manager];
+    //    id response;
+    AFHTTPRequestOperationManager *manager1 = [AFHTTPRequestOperationManager manager];
     [manager1 GET:@"https://api.nutritionix.com/v1_1/item?upc=49000036756&appId=dfc68413&appKey=8830b6bae9185990e08534a06b0c4194" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject)
      {
-//         response = responseObject;
+         //         response = responseObject;
          
          NSMutableDictionary *jsonDictionary = (NSMutableDictionary *)responseObject;
          
          NSMutableArray *data = [[NSMutableArray alloc] init];
          
-//         [data addObject:upc];
+         //         [data addObject:upc];
          [data addObject:jsonDictionary];
          
      }
      
-         failure:^(AFHTTPRequestOperation *operation, NSError *error)
+          failure:^(AFHTTPRequestOperation *operation, NSError *error)
      {
-//         response = nil;
+         //         response = nil;
          
          NSLog(@">>>  Nutritionix API call error:  %@", error);
      }
      ];
-
+    
 }
 
 - (NSDictionary *) query: (NSString *)statement {
@@ -187,11 +255,11 @@ static NSString *longitude;
         NSString *value = [location objectForKey:key];
         NSLog(@"w0ewfe==%@",value);
     }
-
+    
     NSDictionary *now = watchDic[@"now"];
     for (NSString *key in now) {
         NSString *value = [now objectForKey:key];
-         NSLog(@"w0ewf11e==%@",value);
+        NSLog(@"w0ewf11e==%@",value);
     }
 }
 @end

@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		EE0D45ED1CA1138A007150E0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0D45EC1CA1138A007150E0 /* CoreLocation.framework */; };
+		EE5F2E371F220C5200CC58BA /* textKVO.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5F2E361F220C5200CC58BA /* textKVO.m */; };
+		EE8DD9451ECFD1800092FCB6 /* NEWViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8DD9431ECFD1800092FCB6 /* NEWViewController.m */; };
+		EE8DD9461ECFD1800092FCB6 /* NEWViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE8DD9441ECFD1800092FCB6 /* NEWViewController.xib */; };
+		EE8DD9491ECFD1C10092FCB6 /* StepView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8DD9481ECFD1C10092FCB6 /* StepView.m */; };
+		EE8DD94D1ECFD1DF0092FCB6 /* StepTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8DD94B1ECFD1DF0092FCB6 /* StepTableViewCell.m */; };
+		EE8DD94E1ECFD1DF0092FCB6 /* StepTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE8DD94C1ECFD1DF0092FCB6 /* StepTableViewCell.xib */; };
 		EEAE8F101D94CD21008F82CE /* BAPrayerTimes.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAE8F0F1D94CD21008F82CE /* BAPrayerTimes.m */; };
 		EEAE8F131D94D883008F82CE /* PrayTime.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAE8F121D94D883008F82CE /* PrayTime.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		EEC1CE0D1BFDAD1100241ECE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEC1CE0C1BFDAD1100241ECE /* main.m */; };
@@ -49,6 +55,16 @@
 
 /* Begin PBXFileReference section */
 		EE0D45EC1CA1138A007150E0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		EE5F2E351F220C5200CC58BA /* textKVO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textKVO.h; sourceTree = "<group>"; };
+		EE5F2E361F220C5200CC58BA /* textKVO.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = textKVO.m; sourceTree = "<group>"; };
+		EE8DD9421ECFD1800092FCB6 /* NEWViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NEWViewController.h; sourceTree = "<group>"; };
+		EE8DD9431ECFD1800092FCB6 /* NEWViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NEWViewController.m; sourceTree = "<group>"; };
+		EE8DD9441ECFD1800092FCB6 /* NEWViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NEWViewController.xib; sourceTree = "<group>"; };
+		EE8DD9471ECFD1C10092FCB6 /* StepView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepView.h; sourceTree = "<group>"; };
+		EE8DD9481ECFD1C10092FCB6 /* StepView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepView.m; sourceTree = "<group>"; };
+		EE8DD94A1ECFD1DF0092FCB6 /* StepTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepTableViewCell.h; sourceTree = "<group>"; };
+		EE8DD94B1ECFD1DF0092FCB6 /* StepTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepTableViewCell.m; sourceTree = "<group>"; };
+		EE8DD94C1ECFD1DF0092FCB6 /* StepTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StepTableViewCell.xib; sourceTree = "<group>"; };
 		EE9C35891DB4A00A001DAE4B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/Info.plist; sourceTree = "<group>"; };
 		EEAE8F0E1D94CD21008F82CE /* BAPrayerTimes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BAPrayerTimes.h; sourceTree = "<group>"; };
 		EEAE8F0F1D94CD21008F82CE /* BAPrayerTimes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BAPrayerTimes.m; sourceTree = "<group>"; };
@@ -121,6 +137,8 @@
 		EEC1CDFF1BFDAD1100241ECE = {
 			isa = PBXGroup;
 			children = (
+				EE5F2E351F220C5200CC58BA /* textKVO.h */,
+				EE5F2E361F220C5200CC58BA /* textKVO.m */,
 				EEAE8F0E1D94CD21008F82CE /* BAPrayerTimes.h */,
 				EEAE8F0F1D94CD21008F82CE /* BAPrayerTimes.m */,
 				EEAE8F111D94D883008F82CE /* PrayTime.h */,
@@ -153,6 +171,14 @@
 				EEC1CE111BFDAD1100241ECE /* ViewController.h */,
 				EEC1CE121BFDAD1100241ECE /* ViewController.m */,
 				EEC1CE141BFDAD1100241ECE /* Main.storyboard */,
+				EE8DD9421ECFD1800092FCB6 /* NEWViewController.h */,
+				EE8DD9431ECFD1800092FCB6 /* NEWViewController.m */,
+				EE8DD9441ECFD1800092FCB6 /* NEWViewController.xib */,
+				EE8DD9471ECFD1C10092FCB6 /* StepView.h */,
+				EE8DD9481ECFD1C10092FCB6 /* StepView.m */,
+				EE8DD94A1ECFD1DF0092FCB6 /* StepTableViewCell.h */,
+				EE8DD94B1ECFD1DF0092FCB6 /* StepTableViewCell.m */,
+				EE8DD94C1ECFD1DF0092FCB6 /* StepTableViewCell.xib */,
 				EEC1CE171BFDAD1100241ECE /* Assets.xcassets */,
 				EEC1CE191BFDAD1100241ECE /* LaunchScreen.storyboard */,
 				EE9C358A1DB4A00A001DAE4B /* Info.plist */,
@@ -280,7 +306,7 @@
 				TargetAttributes = {
 					EEC1CE071BFDAD1100241ECE = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = UXHZJEX24R;
+						DevelopmentTeam = VHVLE5FL92;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -324,8 +350,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEC1CE1B1BFDAD1100241ECE /* LaunchScreen.storyboard in Resources */,
+				EE8DD94E1ECFD1DF0092FCB6 /* StepTableViewCell.xib in Resources */,
 				EEC1CE181BFDAD1100241ECE /* Assets.xcassets in Resources */,
 				EEC1CE161BFDAD1100241ECE /* Main.storyboard in Resources */,
+				EE8DD9461ECFD1800092FCB6 /* NEWViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,12 +386,16 @@
 				EEFBD22E1CA284C600C5A783 /* AFNetworkReachabilityManager.m in Sources */,
 				EEFBD2321CA284C600C5A783 /* AFURLResponseSerialization.m in Sources */,
 				EEFBD2301CA284C600C5A783 /* AFURLConnectionOperation.m in Sources */,
+				EE8DD9451ECFD1800092FCB6 /* NEWViewController.m in Sources */,
 				EEFBD22F1CA284C600C5A783 /* AFSecurityPolicy.m in Sources */,
 				EEFBD22D1CA284C600C5A783 /* AFHTTPSessionManager.m in Sources */,
 				EEFBD2311CA284C600C5A783 /* AFURLRequestSerialization.m in Sources */,
+				EE8DD9491ECFD1C10092FCB6 /* StepView.m in Sources */,
 				EEFBD2331CA284C600C5A783 /* AFURLSessionManager.m in Sources */,
+				EE8DD94D1ECFD1DF0092FCB6 /* StepTableViewCell.m in Sources */,
 				EEC1CE101BFDAD1100241ECE /* AppDelegate.m in Sources */,
 				EEC1CE0D1BFDAD1100241ECE /* main.m in Sources */,
+				EE5F2E371F220C5200CC58BA /* textKVO.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,7 +495,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -501,7 +533,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -514,14 +546,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Shaohui Liang (AUMJG57LWL)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shaohui Liang (AUMJG57LWL)";
-				DEVELOPMENT_TEAM = UXHZJEX24R;
-				INFOPLIST_FILE = SystemMap/Info.plist;
+				DEVELOPMENT_TEAM = VHVLE5FL92;
+				INFOPLIST_FILE = "$(SRCROOT)/SystemMap/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.smawatch.subswsm;
+				PRODUCT_BUNDLE_IDENTIFIER = star5588.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "245eefda-1c94-463a-9a2e-e370480eb9db";
-				PROVISIONING_PROFILE_SPECIFIER = swsm_dist_sub;
+				PROVISIONING_PROFILE = "e7ef197a-dd9f-4072-b7e9-a8a17caeebe7";
+				PROVISIONING_PROFILE_SPECIFIER = All_development_text;
 			};
 			name = Debug;
 		};
@@ -530,14 +562,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEVELOPMENT_TEAM = UXHZJEX24R;
-				INFOPLIST_FILE = SystemMap/Info.plist;
+				DEVELOPMENT_TEAM = RE5G996PSL;
+				INFOPLIST_FILE = "$(SRCROOT)/SystemMap/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.smawatch.subswsm;
+				PRODUCT_BUNDLE_IDENTIFIER = star5588.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "245eefda-1c94-463a-9a2e-e370480eb9db";
-				PROVISIONING_PROFILE_SPECIFIER = swsm_dist_sub;
+				PROVISIONING_PROFILE = "7cecfa6b-3172-4b51-9843-9c54d7e32ee6";
+				PROVISIONING_PROFILE_SPECIFIER = star5588_dis;
 			};
 			name = Release;
 		};
