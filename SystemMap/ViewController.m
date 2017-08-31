@@ -122,7 +122,7 @@
     //    }
     //      [self.locaManager startUpdatingLocation];
     
-    
+    gagaeherheh
 }
 static NSString *locaStr;
 static NSString *latitude;
