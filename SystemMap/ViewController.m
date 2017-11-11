@@ -67,6 +67,7 @@
     
     arr = [NSMutableArray array];
     
+<<<<<<< HEAD
     requestSerializer = [AFHTTPSessionManager manager];
     requestSerializer.requestSerializer = [AFJSONRequestSerializer serializer];
     requestSerializer.responseSerializer.acceptableContentTypes  = [NSSet setWithObjects: @"application/json",@"text/json", nil];
@@ -123,6 +124,40 @@
     //      [self.locaManager startUpdatingLocation];
     
     gagaeherheh
+=======
+    NSLog(@"我要更新1");
+     NSLog(@"我要更新2");
+    NSLog(@"我要更新3");
+    NSLog(@"我要更新4");
+    NSLog(@"我要更新56");
+//    Class LSApplicationWorkspace_class = objc_getClass("LSApplicationWorkspace");
+//    
+//    NSObject* workspace = [LSApplicationWorkspace_class performSelector:@selector(defaultWorkspace)];
+//    
+//    NSLog(@"apps: %@", [workspace performSelector:@selector(allApplications)]);
+    
+    // Do any additional setup after loading the view, typically from a nib.
+//    MKMapView * mapView = [[MKMapView alloc] initWithFrame:self.view.frame];
+//    mapView.region=MKCoordinateRegionMake(CLLocationCoordinate2DMake(39.26, 116.3), MKCoordinateSpanMake(1, 1));
+//    mapView.userTrackingMode = YES;
+//    [self.view addSubview:mapView];
+//    MKCoordinateRegion MKCoordinateRegionForMapRect(MKMapRect rect);
+   // https://api.thinkpage.cn/v3/weather/now.json?key=ntlttxmitdrkby61&location=beijing&language=zh-Hans&unit=c
+    self.locaManager = [[CLLocationManager alloc] init];
+    self.locaManager.delegate = self;
+    
+    self.locaManager.desiredAccuracy = kCLLocationAccuracyBest; //控制定位精度,越高耗电量越大。
+    
+    self.locaManager.distanceFilter = 20; //控制定位服务更新频率。单位是“米”
+    [self.locaManager requestAlwaysAuthorization];  //调用了这句,就会弹出允许框了.
+    [self.locaManager requestWhenInUseAuthorization];
+    self.locaManager.pausesLocationUpdatesAutomatically = NO; //该模式是抵抗ios在后台杀死程序设置，iOS会根据当前手机使用状况会自动关闭某些应用程序的后台刷新，该语句申明不能够被暂停，但是不一定iOS系统在性能不佳的情况下强制结束应用刷新kCLAuthorizationStatusAuthorizedAlways
+    //    [CLLocationManager authorizationStatus] = kCLAuthorizationStatusAuthorizedAlways;
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+        self.locaManager.allowsBackgroundLocationUpdates = YES;
+    }
+      [self.locaManager startUpdatingLocation];
+>>>>>>> master
 }
 static NSString *locaStr;
 static NSString *latitude;
